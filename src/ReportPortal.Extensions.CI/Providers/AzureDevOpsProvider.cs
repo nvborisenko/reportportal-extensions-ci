@@ -12,7 +12,7 @@ namespace ReportPortal.Extensions.CI.Providers
 {
     public class AzureDevOpsProvider : IReportEventsObserver
     {
-        private const string KEY = "k1";
+        private const string KEY = "SYSTEM_TASKINSTANCEID";
 
         public void Initialize(IReportEventsSource reportEventsSource)
         {
