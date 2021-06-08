@@ -1,5 +1,4 @@
 ﻿using ReportPortal.Client.Abstractions.Filtering;
-using ReportPortal.Client.Abstractions.Models;
 using ReportPortal.Shared.Extensibility;
 using ReportPortal.Shared.Extensibility.ReportEvents;
 using ReportPortal.Shared.Extensibility.ReportEvents.EventArgs;
@@ -30,8 +29,7 @@ namespace ReportPortal.Extensions.CI.Providers
             var filter = new FilterOption()
             {
                 Filters = new List<Filter> {
-                    new Filter(FilterOperation.Has, "attributeKey", KEY),
-                    new Filter(FilterOperation.Has, "attributeValue", ContextValue) },
+                    new Filter(FilterOperation.Contains, "description", ContextValue), },
                 Sorting = new Sorting(new List<string> { "startTime" }, SortDirection.Descending)
             };
 
@@ -45,18 +43,15 @@ namespace ReportPortal.Extensions.CI.Providers
 
         private void ReportEventsSource_OnBeforeLaunchStarting(ILaunchReporter launchReporter, BeforeLaunchStartingEventArgs args)
         {
-            if (!string.IsNullOrEmpty(ContextValue))
-            {
-                var attribute = new ItemAttribute { Key = KEY, Value = ContextValue };
+            var hiddenInfo = $"<!-- {KEY}:{ContextValue} -->";
 
-                if (args.StartLaunchRequest.Attributes != null)
-                {
-                    args.StartLaunchRequest.Attributes.Add(attribute);
-                }
-                else
-                {
-                    args.StartLaunchRequest.Attributes = new List<ItemAttribute> { attribute };
-                }
+            if (args.StartLaunchRequest.Description != null)
+            {
+                args.StartLaunchRequest.Description += Environment.NewLine + hiddenInfo;
+            }
+            else
+            {
+                args.StartLaunchRequest.Description = hiddenInfo;
             }
         }
     }
