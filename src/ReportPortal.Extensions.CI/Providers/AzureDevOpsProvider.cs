@@ -15,13 +15,15 @@ namespace ReportPortal.Extensions.CI.Providers
 
         public void Initialize(IReportEventsSource reportEventsSource)
         {
-            // track context only if rerun is set in pipeline
-
-            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TE.RerunMaxAttempts")))
+            // track context only if it's azure and rerun is set in pipeline
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TF_BUILD")))
             {
-                reportEventsSource.OnLaunchInitializing += ReportEventsSource_OnLaunchInitializing;
+                if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TE.RerunMaxAttempts")))
+                {
+                    reportEventsSource.OnLaunchInitializing += ReportEventsSource_OnLaunchInitializing;
 
-                reportEventsSource.OnBeforeLaunchStarting += ReportEventsSource_OnBeforeLaunchStarting;
+                    reportEventsSource.OnBeforeLaunchStarting += ReportEventsSource_OnBeforeLaunchStarting;
+                }
             }
         }
 
