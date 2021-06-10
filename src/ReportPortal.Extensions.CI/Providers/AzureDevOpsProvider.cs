@@ -11,7 +11,7 @@ namespace ReportPortal.Extensions.CI.Providers
 {
     public class AzureDevOpsProvider : IReportEventsObserver
     {
-        private const string KEY = "SYSTEM_TASKINSTANCEID";
+        private const string KEY = "DTA.EnvironmentUri";
 
         public void Initialize(IReportEventsSource reportEventsSource)
         {
