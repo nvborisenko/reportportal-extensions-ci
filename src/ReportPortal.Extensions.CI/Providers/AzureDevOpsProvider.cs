@@ -44,6 +44,7 @@ namespace ReportPortal.Extensions.CI.Providers
 
             if (launches.Items.Count() != 0)
             {
+                args.Configuration.Properties["Launch:Rerun"] = true;
                 args.Configuration.Properties["Launch:RerunOf"] = launches.Items.First().Uuid;
             }
         }
