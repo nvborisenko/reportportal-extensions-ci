@@ -1,4 +1,5 @@
 ﻿using ReportPortal.Client.Abstractions.Filtering;
+using ReportPortal.Client.Abstractions.Models;
 using ReportPortal.Shared.Extensibility;
 using ReportPortal.Shared.Extensibility.ReportEvents;
 using ReportPortal.Shared.Extensibility.ReportEvents.EventArgs;
@@ -60,6 +61,18 @@ namespace ReportPortal.Extensions.CI.Providers
             else
             {
                 args.StartLaunchRequest.Description = hiddenInfo;
+            }
+
+            // determine branch
+            var branchName = Environment.GetEnvironmentVariable("BUILD_SOURCEBRANCHNAME");
+            if (!string.IsNullOrEmpty(branchName))
+            {
+                if (args.StartLaunchRequest.Attributes == null)
+                {
+                    args.StartLaunchRequest.Attributes = new List<ItemAttribute>();
+                }
+
+                args.StartLaunchRequest.Attributes.Add(new ItemAttribute { Key = "branch", Value = branchName });
             }
         }
     }
