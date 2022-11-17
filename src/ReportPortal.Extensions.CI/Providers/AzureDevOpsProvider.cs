@@ -19,12 +19,29 @@ namespace ReportPortal.Extensions.CI.Providers
             // track context only if it's azure and rerun is set in pipeline
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TF_BUILD")))
             {
+                reportEventsSource.OnBeforeLaunchStarting += BranchHandler;
+
                 if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TE.RerunMaxAttempts")))
                 {
                     reportEventsSource.OnLaunchInitializing += ReportEventsSource_OnLaunchInitializing;
 
                     reportEventsSource.OnBeforeLaunchStarting += ReportEventsSource_OnBeforeLaunchStarting;
                 }
+            }
+        }
+
+        private void BranchHandler(ILaunchReporter launchReporter, BeforeLaunchStartingEventArgs args)
+        {
+            // determine branch
+            var branchName = Environment.GetEnvironmentVariable("BUILD_SOURCEBRANCHNAME");
+            if (!string.IsNullOrEmpty(branchName))
+            {
+                if (args.StartLaunchRequest.Attributes == null)
+                {
+                    args.StartLaunchRequest.Attributes = new List<ItemAttribute>();
+                }
+
+                args.StartLaunchRequest.Attributes.Add(new ItemAttribute { Key = "branch", Value = branchName });
             }
         }
 
@@ -61,18 +78,6 @@ namespace ReportPortal.Extensions.CI.Providers
             else
             {
                 args.StartLaunchRequest.Description = hiddenInfo;
-            }
-
-            // determine branch
-            var branchName = Environment.GetEnvironmentVariable("BUILD_SOURCEBRANCHNAME");
-            if (!string.IsNullOrEmpty(branchName))
-            {
-                if (args.StartLaunchRequest.Attributes == null)
-                {
-                    args.StartLaunchRequest.Attributes = new List<ItemAttribute>();
-                }
-
-                args.StartLaunchRequest.Attributes.Add(new ItemAttribute { Key = "branch", Value = branchName });
             }
         }
     }
