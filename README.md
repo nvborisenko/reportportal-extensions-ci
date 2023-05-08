@@ -1,4 +1,4 @@
-Automatically append build information from CI to the launch in Report Portal.
+Automatically append build information from CI to the launch in Report Portal. Install [ReportPortal.Extensions.CI](https://www.nuget.org/packages/ReportPortal.Extensions.CI) nuget package and enjoy.
 
 # Azure DevOps
 
