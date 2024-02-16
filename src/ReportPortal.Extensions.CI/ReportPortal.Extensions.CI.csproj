@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ReportPortal.Shared" Version="3.6.2" />
+    <PackageReference Include="ReportPortal.Shared" Version="3.6.0" />
   </ItemGroup>
 
   <ItemGroup>
