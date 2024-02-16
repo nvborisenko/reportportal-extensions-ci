@@ -25,13 +25,30 @@ Put the launch link into build description (requires `username`/`apiToken`). It 
 Configuration
 ```json
 {
-    "extensions": {
-        "ci": {
-            "jenkins": {
-                "username": "<your_jenkins_username>",
-                "apiToken": "<user_api_token>"
-            }
-        }
+  "extensions": {
+    "ci": {
+      "jenkins": {
+        "username": "<your_jenkins_username>",
+        "apiToken": "<user_api_token>"
+      }
     }
+  }
 }
 ```
+
+
+# Troubleshooting
+
+Set the `Extensions:CI:Diagnostics` configuration property to `true`:
+
+```json
+{
+  "extensions": {
+    "ci": {
+      "diagnostics": true
+    }
+  }
+}
+```
+
+And find the list of env variables in logs attached to the launch in Report Portal. It helps to undestand your execution environment.
