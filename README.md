@@ -1,4 +1,4 @@
-Automatically append build information from CI to the launch in Report Portal. Install [ReportPortal.Extensions.CI](https://www.nuget.org/packages/ReportPortal.Extensions.CI) nuget package and enjoy.
+Automatically append build information from CI to the launch in the Report Portal. Install [ReportPortal.Extensions.CI](https://www.nuget.org/packages/ReportPortal.Extensions.CI) NuGet package and enjoy.
 
 Supported CI:
 - [Azure DevOps](#azure-devops)
@@ -7,20 +7,26 @@ Supported CI:
 # Azure DevOps
 
 ## Branch name
-Takes `BRANCH_NAME` env var and set it as launch attribute.
+Takes `BRANCH_NAME` env var and sets it as a launch attribute.
 
 ## Merge retried tests
-If you use Visual Studio Test task to execute tests, and you retried failed tests. 
+If you use the Visual Studio Test task to execute tests, your failed tests after rerun will be added as retries to the launch.
+
+## Agent job configuration support
+Only Single agent configuration is supported, Multi-agent is not supported.
+
+## Branch name
+Sets branch name as a launch attribute.
 
 # Jenkins
 
-Activated only if there is `JENKINS_URL` environment variable (already set by jenkins).
+It is activated only if there is a `JENKINS_URL` environment variable (already set by Jenkins).
 
 ## Branch name
-Takes `BRANCH_NAME` env var and set it as launch attribute.
+Takes `BRANCH_NAME` env var and sets it as a launch attribute.
 
 ## Build description
-Put the launch link into build description (requires `username`/`apiToken`). It gets jenkins host via `BUILD_URL` environment variable.
+Put the launch link into build description (requires `username`/`apiToken`). It gets Jenkins host via the `BUILD_URL` environment variable.
 
 Configuration
 ```json
@@ -51,4 +57,4 @@ Set the `Extensions:CI:Diagnostics` configuration property to `true`:
 }
 ```
 
-And find the list of env variables in logs attached to the launch in Report Portal. It helps to undestand your execution environment.
+Then you can find the list of env variables in logs attached to the launch in the Report Portal. It helps to understand your execution environment.
