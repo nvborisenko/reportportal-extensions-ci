@@ -3,6 +3,7 @@ Automatically append build information from CI to the launch in the Report Porta
 Supported CI:
 - [Azure DevOps](#azure-devops)
 - [Jenkins](#jenkins)
+- [GitLab]
 
 # Azure DevOps
 
